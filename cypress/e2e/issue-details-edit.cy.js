@@ -62,4 +62,40 @@ describe('Issue details editing', () => {
   });
 
   const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
+
+//Bonus Task 1
+
+it('Checking dropdown “Priority” on issue detail page.', () => {
+
+    const expectedLength = 5;
+    const priorities = ["Lowest", "Low", "Medium", "Highest"];
+    priorities.push("High");
+
+
+});
+
+//Bonus Task 2
+
+  it('Reporter name has only characters in it', () => {
+
+      const regex = /^[A-Za-z\s]*$/;
+      const reporter1 = "Baby Yoda";
+      const reporter2 = "Pickle Rick";
+      const reporter3 = "Lord Gaben";
+     
+      getIssueDetailsModal().within(() => {
+
+      cy.get(`[data-testid="select:reporter"]`).click().should(`have.text`, reporter1);
+      cy.get('[data-testid="select-option:Pickle Rick"]').should('have.text', reporter2);
+      cy.get('[data-testid="select-option:Lord Gaben"]').should('have.text', reporter3);
+
+      //Check if the reporter names contains only characters and spaces
+      expect(reporter1).to.match(regex);
+      expect(reporter2).to.match(regex);
+      expect(reporter3).to.match(regex);
+    });
+  });
+
+
+
 });

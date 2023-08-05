@@ -175,4 +175,36 @@ describe('Issue create', () => {
       cy.get('[data-testid="form-field:title"]').should('contain', 'This field is required');
     });
   });
+
+//Bonus Task 3
+
+it('Issue title on the board does not have leading and trailing spaces in it', () => {
+
+  const titleHello = "   Hello   world   "
+  let trimmedTitle;
+
+  //Create an issue with the new title (unnecessary additional spaces between words)
+    cy.get('[data-testid="modal:issue-create"]').within(() => {
+    cy.get('input[name="title"]').type(titleHello);
+    cy.get('button[type="submit"]').click();
+    });
+
+    cy.get('[data-testid="modal:issue-create"]').should('not.exist');
+    cy.contains('Issue has been successfully created.').should('be.visible');
+    cy.reload();
+    cy.contains('Issue has been successfully created.').should('not.exist');
+
+    trimmedTitle = titleHello.trim();
+    
+    //Assert that created issue title does not contain any unnecessary spaces on the board view
+    cy.get('[data-testid="list-issue"]').first().should(`be.visible`).and(`contain`, trimmedTitle);
+    });
+  
+
 });
+
+
+
+
+
+
